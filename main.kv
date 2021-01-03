@@ -53,10 +53,10 @@ BoxLayout:
                     id: frequency_slider
                     min: 0
                     value: 100
-                    max: 500
+                    max: 4100
                     hint: False
                 MDLabel:
-                    text: str(int((abs(frequency_slider.value)))) + ' Hz'
+                    text: str(int((abs(frequency_slider.value)))*10) + ' Hz'
         BoxLayout:
             orientation: 'vertical'
             size_hint: (0.5, 0.6)

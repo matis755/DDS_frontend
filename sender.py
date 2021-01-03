@@ -5,7 +5,7 @@ from serial import Serial
 class Parser:
     def __init__(self):
         self.shape_codes = {'sine': 0, 'triangle': 1, 'square': 2}
-        self.waveform = {'amplitude': 1, 'offset': 1, 'frequency': 100, 'shape': self.shape_codes['sine']}
+        self.waveform = {'amplitude': 1, 'offset': 1, 'frequency_mult': 100, 'shape': self.shape_codes['sine']}
 
     @staticmethod
     def float_to_int(number):
@@ -17,7 +17,7 @@ class Parser:
     def parse_data(self, ids):
         self.waveform['amplitude'] = self.float_to_milivolts(ids.amplitude_slider.value)
         self.waveform['offset'] = self.float_to_milivolts(ids.offset_slider.value)
-        self.waveform['frequency'] = self.float_to_int(ids.frequency_slider.value)
+        self.waveform['frequency_mult'] = self.float_to_int(ids.frequency_slider.value)
 
         if ids.sine_checkbox.state == 'down':
             self.waveform['shape'] = self.shape_codes['sine']
@@ -43,11 +43,11 @@ class Sender(Parser):
         self.port.write(frame)
 
     def prepare_frame(self, waveform):
-        amplitude_bytes = waveform['amplitude']
-        offset_bytes = waveform['offset']
-        frequency_bytes = waveform['frequency']
-        shape_byte = waveform['shape']
-        return struct.pack('>hhhB', amplitude_bytes, offset_bytes, frequency_bytes, shape_byte)
+        amplitude = waveform['amplitude']
+        offset = waveform['offset']
+        frequency = waveform['frequency_mult']
+        shape = waveform['shape']
+        return struct.pack('>Bhhh', shape, frequency, offset, amplitude)
 
     def __del__(self):
         self.port.close()
