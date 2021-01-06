@@ -34,7 +34,7 @@ class Parser:
 class Sender(Parser):
     def __init__(self):
         super(Sender, self).__init__()
-        self.port = Serial('COM12')
+        self.port = Serial('COM12', 19200)
 
     def send_to_fpga(self, frontend):
         waveform = self.parse_data(frontend)
