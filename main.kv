@@ -1,0 +1,112 @@
+BoxLayout:
+    orientation: 'vertical'
+    padding: 5
+    BoxLayout:
+        orientation: 'horizontal'
+        Image:
+            source: 'media/agh_logo.png'
+            size_hint: (0.8, 0.8)
+        MDLabel:
+            text: u'Programmable DDS signal generator'
+            halign: 'center'
+            font_style: 'H4'
+
+    BoxLayout:
+        orientation: 'horizontal'
+        BoxLayout:
+            orientation: 'vertical'
+            BoxLayout:
+                orientation: 'horizontal'
+                MDLabel:
+                    text: 'Amplitude:'
+                    halign: 'right'
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                MDSlider:
+                    id: amplitude_slider
+                    min: 0
+                    max: 3.3
+                    value: 1
+                    hint: False
+                MDLabel:
+                    text: "{:.2f}".format(abs(amplitude_slider.value)) + ' V'
+            BoxLayout:
+                orientation: 'horizontal'
+                MDLabel:
+                    text: 'Offset:'
+                    halign: 'right'
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                MDSlider:
+                    id: offset_slider
+                    min: 0
+                    max: 3.3
+                    value: 1
+                    hint: False
+                MDLabel:
+                    text: "{:.2f}".format(abs(offset_slider.value)) + ' V'
+            BoxLayout:
+                orientation: 'horizontal'
+                MDLabel:
+                    text: 'Frequency:'
+                    halign: 'right'
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                MDSlider:
+                    id: frequency_slider
+                    min: 0
+                    value: 100
+                    max: 4100
+                    hint: False
+                MDLabel:
+                    text: str(int((abs(frequency_slider.value)))*10) + ' Hz'
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: (0.5, 0.6)
+            pos_hint: {"left": 1, "top": 1}
+            padding: 20
+
+            MDLabel:
+                text: 'Waveform shape:'
+                halign: 'right'
+                size_hint: (1, 0.5)
+
+            BoxLayout:
+                orientation: 'horizontal'
+                MDLabel:
+                    text: 'Sine'
+                    halign: 'right'
+                MDCheckbox:
+                    id: sine_checkbox
+                    group: 'shape'
+                    state: 'down'
+                    size_hint: None, None
+                    pos_hint: {'center_x': .5, 'center_y': .5}
+                    size: "48dp", "48dp"
+
+            BoxLayout:
+                orientation: 'horizontal'
+                MDLabel:
+                    text: 'Triangle'
+                    halign: 'right'
+                MDCheckbox:
+                    id: triangle_checkbox
+                    group: 'shape'
+                    size_hint: None, None
+                    pos_hint: {'center_x': .5, 'center_y': .5}
+                    size: "48dp", "48dp"
+
+            BoxLayout:
+                orientation: 'horizontal'
+                MDLabel:
+                    text: 'Square'
+                    halign: 'right'
+                MDCheckbox:
+                    id: square_checkbox
+                    group: 'shape'
+                    size_hint: None, None
+                    pos_hint: {'center_x': .5, 'center_y': .5}
+                    size: "48dp", "48dp"
+
+    MDFillRoundFlatButton:
+        pos_hint: {"center_x": .5, "center_y": .5}
+        size_hint: (0.8, 0.3)
+        text: "Send to generator!"
+        on_press: app.generate_btn_callback()
